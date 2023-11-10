@@ -12,4 +12,11 @@ public class InputView {
 
         return input;
     }
+
+    public String readMenu() {
+        System.out.println(NoticeType.MENU_INPUT.getMessage());
+        String input = Console.readLine();
+
+        return input;
+    }
 }
