@@ -2,7 +2,7 @@ package christmas.validator;
 
 public class Validator {
     public static void validateDateInput(String input) {
-        int date = validateDateType();
+        int date = validateDateType(input);
         if(isDateOutOfRange(date)) {
             throw new IllegalArgumentException();
         }
