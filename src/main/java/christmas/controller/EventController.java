@@ -20,6 +20,8 @@ public class EventController {
         outPutView.printStart();
         final int date = getDateInput();
         final Orders orders = getMenuInput();
+        outPutView.printPreviewNotice(date);
+        outPutView.printOrders(orders);
     }
 
     public int getDateInput() {
@@ -37,8 +39,8 @@ public class EventController {
         while(true) {
             try {
                 String input = inputView.readMenu();
-                Validator.validateMenuInput(input.trim());
-                return eventService.stringToOrders(input.trim());
+                Validator.validateMenuInput(input.replaceAll("\\s", ""));
+                return eventService.stringToOrders(input.replaceAll("\\s", ""));
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

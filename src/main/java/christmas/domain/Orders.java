@@ -17,4 +17,8 @@ public class Orders {
     public void update(MenuType menuType, int num) {
         orders.put(menuType, num);
     }
+
+    public int getNum(MenuType menuType) {
+        return orders.get(menuType);
+    }
 }
