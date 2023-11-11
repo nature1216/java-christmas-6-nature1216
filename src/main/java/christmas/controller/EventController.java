@@ -2,6 +2,7 @@ package christmas.controller;
 
 import christmas.domain.Orders;
 import christmas.service.EventService;
+import christmas.validator.Validator;
 import christmas.view.InputView;
 import christmas.view.OutPutView;
 
@@ -36,7 +37,8 @@ public class EventController {
         while(true) {
             try {
                 String input = inputView.readMenu();
-                return eventService.stringToOrders(input);
+                Validator.validateMenuInput(input.trim());
+                return eventService.stringToOrders(input.trim());
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
