@@ -22,6 +22,8 @@ public class EventController {
         final Orders orders = getMenuInput();
         outPutView.printPreviewNotice(date);
         outPutView.printOrders(orders);
+        int totalBeforeAmount = eventService.calcTotalBeforeDiscount(orders);
+        outPutView.printTotalBeforeDiscount(totalBeforeAmount);
     }
 
     public int getDateInput() {

@@ -19,4 +19,14 @@ public class EventService {
         }
         return orders;
     }
+
+    public int calcTotalBeforeDiscount(Orders orders) {
+        int amount = 0;
+        for(MenuType menuType : MenuType.values()) {
+            if(orders.getNum(menuType) > 0) {
+                amount += menuType.getCost() * orders.getNum(menuType);
+            }
+        }
+        return amount;
+    }
 }

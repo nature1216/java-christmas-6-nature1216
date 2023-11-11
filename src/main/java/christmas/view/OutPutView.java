@@ -3,6 +3,7 @@ package christmas.view;
 import christmas.domain.Orders;
 import christmas.enumeration.MenuType;
 import christmas.enumeration.NoticeType;
+import christmas.util.FormatUtil;
 
 public class OutPutView {
     public void printStart() {
@@ -21,6 +22,12 @@ public class OutPutView {
                 System.out.println(menuType.getName() + " " + orders.getNum(menuType) + "개");
             }
         }
+        System.out.println();
+    }
+
+    public void printTotalBeforeDiscount(int amount) {
+        System.out.println(NoticeType.TOTAL_BEFORE_DISCOUNT.getMessage());
+        System.out.printf("%s원", FormatUtil.toWonFormat(amount));
     }
 
 }
