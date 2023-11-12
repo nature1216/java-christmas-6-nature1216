@@ -11,4 +11,8 @@ public class DateUtil {
 
         return LocalDate.parse(year + month + day);
     }
+
+    public static boolean inEventPeriod(LocalDate currentDate, LocalDate startDate, LocalDate endDate) {
+        return !currentDate.isBefore(startDate) && !currentDate.isAfter(endDate);
+    }
 }

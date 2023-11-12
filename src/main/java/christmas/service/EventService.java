@@ -9,6 +9,7 @@ import christmas.util.DateUtil;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Date;
 
 public class EventService {
     public Order stringToOrder(String input) {
@@ -36,7 +37,8 @@ public class EventService {
 
     public Benefit applyBenefit(Order order, int day) {
         Benefit benefit = new Benefit();
-        if (canGetGift(calcTotalBeforeDiscount(order))) {
+        LocalDate date = DateUtil.dayToDate(day);
+        if (canGetGift(calcTotalBeforeDiscount(order), date, BenefitType.GIFT_EVENT)) {
             benefit.update(BenefitType.GIFT_EVENT,
                     Integer.parseInt(SystemValue.GIFT_THRESHOLD.getValue().toString()));
         }
@@ -44,7 +46,8 @@ public class EventService {
         return benefit;
     }
 
-    private boolean canGetGift(int amount) {
-        return amount >= Integer.parseInt(SystemValue.GIFT_THRESHOLD.getValue().toString());
+    private boolean canGetGift(int amount, LocalDate date, BenefitType benefitType) {
+        return amount >= Integer.parseInt(SystemValue.GIFT_THRESHOLD.getValue().toString())
+                && DateUtil.inEventPeriod(date, benefitType.getStart(), benefitType.getEnd());
     }
 }
