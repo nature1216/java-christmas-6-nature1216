@@ -4,10 +4,10 @@ import christmas.enumeration.MenuType;
 
 import java.util.EnumMap;
 
-public class Orders {
+public class Order {
     EnumMap<MenuType, Integer> orders;
 
-    public Orders() {
+    public Order() {
         orders = new EnumMap<>(MenuType.class);
         for(MenuType menuType : MenuType.values()) {
             orders.put(menuType, 0);
@@ -21,4 +21,6 @@ public class Orders {
     public int getNum(MenuType menuType) {
         return orders.get(menuType);
     }
+
+    public int get
 }

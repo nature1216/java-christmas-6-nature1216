@@ -1,6 +1,6 @@
 package christmas.view;
 
-import christmas.domain.Orders;
+import christmas.domain.Order;
 import christmas.enumeration.MenuType;
 import christmas.enumeration.NoticeType;
 import christmas.util.FormatUtil;
@@ -15,11 +15,11 @@ public class OutPutView {
         System.out.println();
     }
 
-    public void printOrders(Orders orders) {
+    public void printOrder(Order order) {
         System.out.println(NoticeType.ORDERED_MENU.getMessage());
-        for(MenuType menuType : MenuType.values()) {
-            if(orders.getNum(menuType) > 0) {
-                System.out.println(menuType.getName() + " " + orders.getNum(menuType) + "개");
+        for (MenuType menuType : MenuType.values()) {
+            if (order.getNum(menuType) > 0) {
+                System.out.println(menuType.getName() + " " + order.getNum(menuType) + "개");
             }
         }
         System.out.println();

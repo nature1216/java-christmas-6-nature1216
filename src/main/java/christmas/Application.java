@@ -1,6 +1,7 @@
 package christmas;
 
 import christmas.controller.EventController;
+import christmas.enumeration.SystemValue;
 import christmas.service.EventService;
 import christmas.view.InputView;
 import christmas.view.OutPutView;

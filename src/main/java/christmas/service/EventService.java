@@ -1,15 +1,19 @@
 package christmas.service;
 
-import christmas.domain.Orders;
+import christmas.domain.Benefit;
+import christmas.domain.Order;
+import christmas.enumeration.BenefitType;
 import christmas.enumeration.MenuType;
+import christmas.enumeration.SystemValue;
+import christmas.util.DateUtil;
 
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.List;
 
 public class EventService {
-    public Orders stringToOrders(String input) {
+    public Order stringToOrder(String input) {
         String[] menus = input.split(",");
-        Orders orders = new Orders();
+        Order orders = new Order();
         for (String menu : menus) { // 함수로 빼기
             String name = Arrays.asList(menu.split("-")).get(0);
             int num = Integer.parseInt(Arrays.asList(menu.split("-")).get(1));
@@ -20,13 +24,27 @@ public class EventService {
         return orders;
     }
 
-    public int calcTotalBeforeDiscount(Orders orders) {
+    public int calcTotalBeforeDiscount(Order order) {
         int amount = 0;
-        for(MenuType menuType : MenuType.values()) {
-            if(orders.getNum(menuType) > 0) {
-                amount += menuType.getCost() * orders.getNum(menuType);
+        for (MenuType menuType : MenuType.values()) {
+            if (order.getNum(menuType) > 0) {
+                amount += menuType.getCost() * order.getNum(menuType);
             }
         }
         return amount;
+    }
+
+    public Benefit applyBenefit(Order order, int day) {
+        Benefit benefit = new Benefit();
+        if (canGetGift(calcTotalBeforeDiscount(order))) {
+            benefit.update(BenefitType.GIFT_EVENT,
+                    Integer.parseInt(SystemValue.GIFT_THRESHOLD.getValue().toString()));
+        }
+
+        return benefit;
+    }
+
+    private boolean canGetGift(int amount) {
+        return amount >= Integer.parseInt(SystemValue.GIFT_THRESHOLD.getValue().toString());
     }
 }
