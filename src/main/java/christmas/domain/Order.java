@@ -22,4 +22,24 @@ public class Order {
         return orders.get(menuType);
     }
 
+    public int countDessert() {
+        int count = 0;
+        for(MenuType menuType : MenuType.values()) {
+            if(menuType.getName().equals("DESSERT")) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int countMain() {
+        int count = 0;
+        for(MenuType menuType : MenuType.values()) {
+            if(menuType.getName().equals("MAIN")) {
+                count++;
+            }
+        }
+        return count;
+    }
+
 }
