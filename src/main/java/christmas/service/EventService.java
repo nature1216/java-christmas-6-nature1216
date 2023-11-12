@@ -6,6 +6,7 @@ import christmas.enumeration.BenefitType;
 import christmas.enumeration.MenuType;
 import christmas.enumeration.SystemValue;
 import christmas.util.DateUtil;
+import jdk.jshell.execution.Util;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -41,7 +42,7 @@ public class EventService {
         if (canGetGift(calcTotalBeforeDiscount(order), date)) {
             benefit.update(BenefitType.GIFT_EVENT);
         }
-        benefit = applyWeekDiscount(benefit, order, date);
+        benefit = applyWeekDiscount(benefit, order, date); // benefit assign 안해도 되나?
         if(canGetXMasDiscount(date)) {
             benefit.update(BenefitType.WEEKDAY_DISCOUNT);
         }
@@ -54,16 +55,23 @@ public class EventService {
     }
 
     private Benefit applyWeekDiscount(Benefit benefit, Order order, LocalDate date) {
-        if(isWeekDay(date)) {
+        if(isWeekDay(date) && canGetDiscount(date, BenefitType.WEEKDAY_DISCOUNT)) {
             for(int i=0;i<order.countDessert();i++) {
                 benefit.update(BenefitType.WEEKDAY_DISCOUNT);
             }
             return benefit;
         }
-        for(int i=0;i<order.countMain();i++) {
-            benefit.update(BenefitType.WEEKEND_DISCOUNT);
+        if(!isWeekDay(date) && canGetDiscount(date, BenefitType.WEEKEND_DISCOUNT)) {
+            for(int i=0;i<order.countMain();i++) {
+                benefit.update(BenefitType.WEEKEND_DISCOUNT);
+            }
+            return benefit;
         }
         return benefit;
+    }
+
+    private boolean canGetDiscount(LocalDate date, BenefitType benefitType) {
+        return DateUtil.inEventPeriod(date, benefitType.getStart(), benefitType.getEnd());
     }
 
     private boolean isWeekDay(LocalDate date) {
