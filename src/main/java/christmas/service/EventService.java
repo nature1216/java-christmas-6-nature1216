@@ -42,15 +42,21 @@ public class EventService {
             benefit.update(BenefitType.GIFT_EVENT);
         }
         benefit = applyWeekDiscount(benefit, order, date);
-
+        if(canGetXMasDiscount(date)) {
+            benefit.update(BenefitType.WEEKDAY_DISCOUNT);
+        }
 
         return benefit;
+    }
+
+    private boolean canGetXMasDiscount(LocalDate date) {
+        return DateUtil.inEventPeriod(date, BenefitType.X_MAS_DISCOUNT.getStart(), BenefitType.X_MAS_DISCOUNT.getEnd());
     }
 
     private Benefit applyWeekDiscount(Benefit benefit, Order order, LocalDate date) {
         if(isWeekDay(date)) {
             for(int i=0;i<order.countDessert();i++) {
-                benefit.update(BenefitType.WEEKDAY_DISOUNT);
+                benefit.update(BenefitType.WEEKDAY_DISCOUNT);
             }
             return benefit;
         }

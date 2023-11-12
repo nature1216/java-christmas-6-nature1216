@@ -13,9 +13,7 @@ public enum SystemValue {
     EVENT_YEAR(2023),
     EVENT_MONTH(12),
     SPECIAL_DISCOUNT(DayOfWeek.SUNDAY),
-    WEEKDAY_DISCOUNT_CATEGORY("DESSERT"),
-    WEEKEND_DISCOUNT_CATEGORY("MAIN"),
-    ;
+    X_MAS_DISCOUNT_BASE(1000);
 
     private Object value;
 
