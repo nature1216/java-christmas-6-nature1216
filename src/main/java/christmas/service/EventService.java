@@ -43,15 +43,12 @@ public class EventService {
             benefit.update(BenefitType.GIFT_EVENT);
         }
         benefit = applyWeekDiscount(benefit, order, date); // benefit assign 안해도 되나?
-        if(canGetXMasDiscount(date)) {
-            benefit.update(BenefitType.WEEKDAY_DISCOUNT);
+        if(canGetDiscount(date, BenefitType.X_MAS_DISCOUNT)) {
+            benefit.update(BenefitType.X_MAS_DISCOUNT);
         }
+        System.out.println(benefit.getNum(BenefitType.WEEKEND_DISCOUNT));
 
         return benefit;
-    }
-
-    private boolean canGetXMasDiscount(LocalDate date) {
-        return DateUtil.inEventPeriod(date, BenefitType.X_MAS_DISCOUNT.getStart(), BenefitType.X_MAS_DISCOUNT.getEnd());
     }
 
     private Benefit applyWeekDiscount(Benefit benefit, Order order, LocalDate date) {
