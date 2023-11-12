@@ -7,6 +7,7 @@ import christmas.enumeration.MenuType;
 import christmas.enumeration.SystemValue;
 import christmas.util.DateUtil;
 import jdk.jshell.execution.Util;
+import net.bytebuddy.asm.Advice;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -42,13 +43,22 @@ public class EventService {
         if (canGetGift(calcTotalBeforeDiscount(order), date)) {
             benefit.update(BenefitType.GIFT_EVENT);
         }
-        benefit = applyWeekDiscount(benefit, order, date); // benefit assign 안해도 되나?
+        applyWeekDiscount(benefit, order, date); // benefit assign 안해도 되나?
         if(canGetDiscount(date, BenefitType.X_MAS_DISCOUNT)) {
             benefit.update(BenefitType.X_MAS_DISCOUNT);
         }
-        System.out.println(benefit.getNum(BenefitType.WEEKEND_DISCOUNT));
+        if(canGetDiscount(date, BenefitType.SPECIAL_DISCOUNT)) {
+            applySpecialDiscount(benefit, order, date);
+        }
 
         return benefit;
+    }
+
+    private void applySpecialDiscount(Benefit benefit, Order order, LocalDate date) {
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+        if(dayOfWeek == DayOfWeek.SUNDAY || date.isEqual(LocalDate.of(2023,12,25))) {
+            benefit.update(BenefitType.SPECIAL_DISCOUNT);
+        }
     }
 
     private Benefit applyWeekDiscount(Benefit benefit, Order order, LocalDate date) {
