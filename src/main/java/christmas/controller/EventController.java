@@ -58,11 +58,7 @@ public class EventController {
 
     public Benefit getBenefit(Order order, int day) {
         Benefit benefit = eventService.applyBenefit(order, day);
-        String giftOutput = "없음";
-        if (benefit.getNum(BenefitType.GIFT_EVENT) == 1) {
-            giftOutput = SystemValue.GIFT.getValue().toString() + " " +
-                    SystemValue.GIFT_NUM.getValue().toString() + "개";
-        }
+        String giftOutput = eventService.getGiftOutput(benefit);
         outPutView.printGift(giftOutput);
 
         return benefit;

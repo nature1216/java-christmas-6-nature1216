@@ -48,4 +48,12 @@ public class EventService {
         return amount >= Integer.parseInt(SystemValue.GIFT_THRESHOLD.getValue().toString())
                 && DateUtil.inEventPeriod(date, benefitType.getStart(), benefitType.getEnd());
     }
+
+    public String getGiftOutput(Benefit benefit) {
+        if (benefit.getNum(BenefitType.GIFT_EVENT) == 1) {
+            return SystemValue.GIFT.getValue().toString() + " " +
+                    SystemValue.GIFT_NUM.getValue().toString() + "개";
+        }
+        return "없음";
+    }
 }
