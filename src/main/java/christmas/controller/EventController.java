@@ -2,6 +2,7 @@ package christmas.controller;
 
 import christmas.domain.Benefit;
 import christmas.domain.Order;
+import christmas.enumeration.BenefitType;
 import christmas.enumeration.SystemValue;
 import christmas.service.EventService;
 import christmas.validator.Validator;
@@ -14,6 +15,7 @@ public class EventController {
     InputView inputView;
     OutPutView outPutView;
     EventService eventService;
+
     public EventController(InputView inputView, OutPutView outPutView, EventService eventService) {
         this.inputView = inputView;
         this.outPutView = outPutView;
@@ -22,18 +24,18 @@ public class EventController {
 
     public void run() {
         outPutView.printStart();
-        final int date = getDateInput();
+        final int day = getDateInput();
         final Order order = getMenuInput();
-        outPutView.printPreviewNotice(date);
+        outPutView.printPreviewNotice(day);
         outPutView.printOrder(order);
         int totalBeforeAmount = eventService.calcTotalBeforeDiscount(order);
         outPutView.printTotalBeforeDiscount(totalBeforeAmount);
-        final Benefit benefit = eventService.applyBenefit(order, date);
+        final Benefit benefit = getBenefit(order, day);
     }
 
     public int getDateInput() {
-        while(true) {
-            try{
+        while (true) {
+            try {
                 String input = inputView.readDate();
                 return Integer.parseInt(input);
             } catch (IllegalArgumentException e) {
@@ -43,7 +45,7 @@ public class EventController {
     }
 
     public Order getMenuInput() {
-        while(true) {
+        while (true) {
             try {
                 String input = inputView.readMenu();
                 Validator.validateMenuInput(input.replaceAll("\\s", ""));
@@ -52,5 +54,17 @@ public class EventController {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    public Benefit getBenefit(Order order, int day) {
+        Benefit benefit = eventService.applyBenefit(order, day);
+        String giftOutput = "없음";
+        if (benefit.getNum(BenefitType.GIFT_EVENT) == 1) {
+            giftOutput = SystemValue.GIFT.getValue().toString() + " " +
+                    SystemValue.GIFT_NUM.getValue().toString() + "개";
+        }
+        outPutView.printGift(giftOutput);
+
+        return benefit;
     }
 }

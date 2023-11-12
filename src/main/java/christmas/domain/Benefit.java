@@ -19,7 +19,7 @@ public class Benefit {
         return benefits.get(benefitType);
     }
 
-    public void update(BenefitType benefitType, int amount) {
-        benefits.put(benefitType, benefits.get(benefitType) + amount);
+    public void update(BenefitType benefitType) {
+        benefits.put(benefitType, benefits.get(benefitType) + 1);
     }
 }

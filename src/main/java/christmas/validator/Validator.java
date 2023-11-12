@@ -25,12 +25,12 @@ public class Validator {
     }
 
     private static boolean isDateOutOfRange(int input) {
-        return input < Integer.parseInt(SystemValue.FIRST_DATE.toString()) ||
-                input > Integer.parseInt(SystemValue.END_DATE.toString());
+        return input < Integer.parseInt(SystemValue.FIRST_DATE.getValue().toString()) ||
+                input > Integer.parseInt(SystemValue.END_DATE.getValue().toString());
     }
 
     public static void validateMenuInput(String input) {
-        if (!isMatchFormat(input, SystemValue.MENU_INPUT_FORM.toString())) {
+        if (!isMatchFormat(input, SystemValue.MENU_INPUT_FORM.getValue().toString())) {
             throw new IllegalArgumentException();
         }
         List<String> menus = Arrays.asList(input.split(","));
@@ -57,7 +57,7 @@ public class Validator {
     }
 
     private static boolean isInvalidMenuNum(int num) {
-        return num > Integer.parseInt(SystemValue.MAX_MENU_NUM.toString());
+        return num > Integer.parseInt(SystemValue.MAX_MENU_NUM.getValue().toString());
     }
 
     private static boolean isMatchFormat(String input, String regex) {

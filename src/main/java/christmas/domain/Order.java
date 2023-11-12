@@ -22,5 +22,4 @@ public class Order {
         return orders.get(menuType);
     }
 
-    public int get
 }
