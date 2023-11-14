@@ -37,25 +37,43 @@ public class EventService {
     public Benefit applyBenefit(Order order, int day) {
         Benefit benefit = new Benefit();
         LocalDate date = DateUtil.dayToDate(day);
-        if (canGetGift(calcTotalBeforeDiscount(order), date)) {
-            benefit.update(BenefitType.GIFT_EVENT,
-                    MenuType.getByName(SystemValue.GIFT.getValue().toString()).getCost());
+        int totalBeforeDiscount = calcTotalBeforeDiscount(order);
+
+        if(!canGetBenefit(totalBeforeDiscount)) {
+            return benefit;
         }
+
+        giveGift(benefit, date, totalBeforeDiscount);
         applyWeekDiscount(benefit, order, date);
-        if (canGetDiscount(date, BenefitType.X_MAS_DISCOUNT)) {
-            benefit.update(BenefitType.X_MAS_DISCOUNT, XMasDiscountCalculator.getDiscount(date));
-        }
-        if (canGetDiscount(date, BenefitType.SPECIAL_DISCOUNT)) {
-            applySpecialDiscount(benefit, order, date);
-        }
+        applyXmasDiscount(benefit, date);
+        applySpecialDiscount(benefit, date);
 
         return benefit;
     }
 
-    private void applySpecialDiscount(Benefit benefit, Order order, LocalDate date) {
+    private void applyXmasDiscount(Benefit benefit, LocalDate date) {
+        if (canGetDiscount(date, BenefitType.X_MAS_DISCOUNT)) {
+            benefit.update(BenefitType.X_MAS_DISCOUNT, XMasDiscountCalculator.getDiscount(date));
+        }
+    }
+
+    private void giveGift(Benefit benefit, LocalDate date, int totalBeforeDiscount) {
+        if (canGetGift(totalBeforeDiscount, date)) {
+            benefit.update(BenefitType.GIFT_EVENT,
+                    MenuType.getByName(SystemValue.GIFT.getValue().toString()).getCost());
+        }
+    }
+
+    private boolean canGetBenefit(int totalAmount) {
+        return totalAmount >= Integer.parseInt(SystemValue.MINIMUM_AMOUNT_FOR_BENEFIT.getValue().toString());
+    }
+
+    private void applySpecialDiscount(Benefit benefit, LocalDate date) {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
-        if (dayOfWeek == DayOfWeek.SUNDAY || date.isEqual(LocalDate.of(2023, 12, 25))) {
-            benefit.update(BenefitType.SPECIAL_DISCOUNT, Integer.parseInt(SystemValue.SPECIAL_DISCOUNT.getValue().toString()));
+        if(canGetDiscount(date, BenefitType.SPECIAL_DISCOUNT)) {
+            if (dayOfWeek == DayOfWeek.SUNDAY || date.isEqual(LocalDate.of(2023, 12, 25))) {
+                benefit.update(BenefitType.SPECIAL_DISCOUNT, Integer.parseInt(SystemValue.SPECIAL_DISCOUNT.getValue().toString()));
+            }
         }
     }
 

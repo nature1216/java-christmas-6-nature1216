@@ -8,6 +8,7 @@ public enum SystemValue {
     FIRST_DATE(1),
     END_DATE(31),
     GIFT_THRESHOLD(120000),
+    MINIMUM_AMOUNT_FOR_BENEFIT(10000),
     GIFT(MenuType.CHAMPAGNE.getName()),
     GIFT_NUM(1),
     EVENT_YEAR(2023),
