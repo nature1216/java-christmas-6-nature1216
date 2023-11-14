@@ -56,6 +56,7 @@ public class EventController {
         Benefit benefit = eventService.applyBenefit(order, day);
         String giftOutput = eventService.getGiftOutput(benefit);
         outPutView.printGift(giftOutput);
+        outPutView.printBenefits(benefit);
 
         return benefit;
     }

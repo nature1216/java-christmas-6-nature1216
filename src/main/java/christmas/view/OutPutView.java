@@ -40,4 +40,20 @@ public class OutPutView {
         System.out.println();
     }
 
+    public void printBenefits(Benefit benefit) {
+        System.out.println(NoticeType.BENEFIT.getMessage());
+        String output = "";
+        for (BenefitType benefitType : BenefitType.values()) {
+            if (benefit.getNum(benefitType) == 0) {
+                continue;
+            }
+            output += benefitType.getTitle() + ": " + FormatUtil.toWonFormat(benefit.getNum(benefitType) * (-1)) + "원\n";
+        }
+        if(output.isEmpty()) {
+            output = NoticeType.NONE.getMessage();
+        }
+
+        System.out.println(output);
+    }
+
 }

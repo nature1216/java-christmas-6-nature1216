@@ -4,6 +4,7 @@ import christmas.domain.Benefit;
 import christmas.domain.Order;
 import christmas.enumeration.BenefitType;
 import christmas.enumeration.MenuType;
+import christmas.enumeration.NoticeType;
 import christmas.enumeration.SystemValue;
 import christmas.util.DateUtil;
 import christmas.util.XMasDiscountCalculator;
@@ -96,6 +97,6 @@ public class EventService {
             return SystemValue.GIFT.getValue().toString() + " " +
                     SystemValue.GIFT_NUM.getValue().toString() + "개";
         }
-        return "없음";
+        return NoticeType.NONE.getMessage();
     }
 }

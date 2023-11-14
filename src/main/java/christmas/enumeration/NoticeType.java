@@ -8,7 +8,8 @@ public enum NoticeType {
     ORDERED_MENU("<주문 메뉴>"),
     TOTAL_BEFORE_DISCOUNT("<할인 전 총주문 금액>"),
     GIFT("<증정 메뉴>"),
-    NONE("없음");
+    NONE("없음"),
+    BENEFIT("<혜택 내역>");
 
     private String message;
 
