@@ -42,6 +42,6 @@ public enum MenuType {
                 return menuType;
             }
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(ExceptionType.INVALID_MENU_FORMAT.getMessage());
     }
 }

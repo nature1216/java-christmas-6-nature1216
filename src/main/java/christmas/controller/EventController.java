@@ -34,25 +34,22 @@ public class EventController {
     }
 
     public int getDateInput() {
-        while (true) {
-            try {
-                String input = inputView.readDate();
-                return Integer.parseInt(input);
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
+        try {
+            String input = inputView.readDate();
+            return Integer.parseInt(input);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return getDateInput();
         }
     }
 
     public Order getMenuInput() {
-        while (true) {
-            try {
-                String input = inputView.readMenu();
-                Validator.validateMenuInput(input.replaceAll("\\s", ""));
-                return eventService.stringToOrder(input.replaceAll("\\s", ""));
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+        try {
+            String input = inputView.readMenu();
+            return eventService.stringToOrder(input.replaceAll("\\s", ""));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return getMenuInput();
         }
     }
 

@@ -1,5 +1,6 @@
 package christmas.validator;
 
+import christmas.enumeration.ExceptionType;
 import christmas.enumeration.MenuType;
 import christmas.enumeration.SystemValue;
 
@@ -12,15 +13,15 @@ public class Validator {
     public static void validateDateInput(String input) {
         int date = validateDateType(input);
         if (isDateOutOfRange(date)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ExceptionType.INVALID_DATE_TYPE.getMessage());
         }
     }
 
     public static int validateDateType(String input) {
         try {
             return Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException();
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(ExceptionType.INVALID_DATE_TYPE.getMessage());
         }
     }
 
@@ -31,7 +32,7 @@ public class Validator {
 
     public static void validateMenuInput(String input) {
         if (!isMatchFormat(input, SystemValue.MENU_INPUT_FORM.getValue().toString())) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ExceptionType.INVALID_MENU_FORMAT.getMessage());
         }
         List<String> menus = Arrays.asList(input.split(","));
 
@@ -45,7 +46,7 @@ public class Validator {
             num += Integer.parseInt(Arrays.asList(menu.split("-")).get(1));
         }
         if (isInvalidMenuNum(num)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ExceptionType.INVALID_MENU_FORMAT.getMessage());
         }
     }
 

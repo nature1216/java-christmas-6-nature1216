@@ -8,7 +8,11 @@ public class InputView {
     public String readDate() {
         System.out.println(NoticeType.DATE_INPUT.getMessage());
         String input = Console.readLine();
-        Validator.validateDateInput(input);
+        try {
+            Validator.validateDateInput(input);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
 
         return input;
     }
@@ -16,6 +20,11 @@ public class InputView {
     public String readMenu() {
         System.out.println(NoticeType.MENU_INPUT.getMessage());
         String input = Console.readLine();
+        try {
+            Validator.validateMenuInput(input.replaceAll("\\s", ""));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
 
         return input;
     }
