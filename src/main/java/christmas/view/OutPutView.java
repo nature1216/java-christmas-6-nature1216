@@ -42,18 +42,24 @@ public class OutPutView {
 
     public void printBenefits(Benefit benefit) {
         System.out.println(NoticeType.BENEFIT.getMessage());
-        String output = "";
+
+        StringBuilder output = new StringBuilder();
         for (BenefitType benefitType : BenefitType.values()) {
-            if (benefit.getNum(benefitType) == 0) {
+            if (benefit.getAmount(benefitType) == 0) {
                 continue;
             }
-            output += benefitType.getTitle() + ": " + FormatUtil.toWonFormat(benefit.getNum(benefitType) * (-1)) + "원\n";
+            output.append(benefitType.getTitle()).append(": ").append(FormatUtil.toWonFormat(benefit.getAmount(benefitType) * (-1))).append("원\n");
         }
-        if(output.isEmpty()) {
-            output = NoticeType.NONE.getMessage();
+        if(output.length() == 0) {
+            output = new StringBuilder(NoticeType.NONE.getMessage());
         }
 
         System.out.println(output);
+    }
+
+    public void printTotalBenefit(int amount) {
+        System.out.println(NoticeType.TOTAL_BENEFIT.getMessage());
+        System.out.println(FormatUtil.toWonFormat(amount * (-1)) + "원");
     }
 
 }

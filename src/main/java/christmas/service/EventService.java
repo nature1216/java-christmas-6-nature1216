@@ -93,10 +93,14 @@ public class EventService {
     }
 
     public String getGiftOutput(Benefit benefit) {
-        if (benefit.getNum(BenefitType.GIFT_EVENT) == MenuType.getByName(SystemValue.GIFT.getValue().toString()).getCost()) {
+        if (benefit.getAmount(BenefitType.GIFT_EVENT) == MenuType.getByName(SystemValue.GIFT.getValue().toString()).getCost()) {
             return SystemValue.GIFT.getValue().toString() + " " +
                     SystemValue.GIFT_NUM.getValue().toString() + "개";
         }
         return NoticeType.NONE.getMessage();
+    }
+
+    public int calcTotalAfterDiscount(int beforeAmount, int benefitAmount) {
+        return beforeAmount - beforeAmount;
     }
 }

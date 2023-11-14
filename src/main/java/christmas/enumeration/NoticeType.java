@@ -9,7 +9,8 @@ public enum NoticeType {
     TOTAL_BEFORE_DISCOUNT("<할인 전 총주문 금액>"),
     GIFT("<증정 메뉴>"),
     NONE("없음"),
-    BENEFIT("<혜택 내역>");
+    BENEFIT("<혜택 내역>"),
+    TOTAL_BENEFIT("<총혜택 금액>");
 
     private String message;
 
