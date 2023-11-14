@@ -14,7 +14,8 @@ public enum SystemValue {
     EVENT_MONTH(12),
     SPECIAL_DISCOUNT(1000),
     X_MAS_DISCOUNT_BASE(1000),
-    ;
+    WEEKDAY_DISCOUNT_AMOUNT(2023),
+    WEEKEND_DISCOUNT_AMOUNT(2023);
 
     private Object value;
 

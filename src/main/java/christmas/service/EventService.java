@@ -6,8 +6,7 @@ import christmas.enumeration.BenefitType;
 import christmas.enumeration.MenuType;
 import christmas.enumeration.SystemValue;
 import christmas.util.DateUtil;
-import jdk.jshell.execution.Util;
-import net.bytebuddy.asm.Advice;
+import christmas.util.XMasDiscountCalculator;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -41,13 +40,14 @@ public class EventService {
         Benefit benefit = new Benefit();
         LocalDate date = DateUtil.dayToDate(day);
         if (canGetGift(calcTotalBeforeDiscount(order), date)) {
-            benefit.update(BenefitType.GIFT_EVENT);
+            benefit.update(BenefitType.GIFT_EVENT,
+                    MenuType.getByName(SystemValue.GIFT.getValue().toString()).getCost());
         }
-        applyWeekDiscount(benefit, order, date); // benefit assign 안해도 되나?
-        if(canGetDiscount(date, BenefitType.X_MAS_DISCOUNT)) {
-            benefit.update(BenefitType.X_MAS_DISCOUNT);
+        applyWeekDiscount(benefit, order, date);
+        if (canGetDiscount(date, BenefitType.X_MAS_DISCOUNT)) {
+            benefit.update(BenefitType.X_MAS_DISCOUNT, XMasDiscountCalculator.getDiscount(date));
         }
-        if(canGetDiscount(date, BenefitType.SPECIAL_DISCOUNT)) {
+        if (canGetDiscount(date, BenefitType.SPECIAL_DISCOUNT)) {
             applySpecialDiscount(benefit, order, date);
         }
 
@@ -56,22 +56,20 @@ public class EventService {
 
     private void applySpecialDiscount(Benefit benefit, Order order, LocalDate date) {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
-        if(dayOfWeek == DayOfWeek.SUNDAY || date.isEqual(LocalDate.of(2023,12,25))) {
-            benefit.update(BenefitType.SPECIAL_DISCOUNT);
+        if (dayOfWeek == DayOfWeek.SUNDAY || date.isEqual(LocalDate.of(2023, 12, 25))) {
+            benefit.update(BenefitType.SPECIAL_DISCOUNT, Integer.parseInt(SystemValue.SPECIAL_DISCOUNT.getValue().toString()));
         }
     }
 
     private Benefit applyWeekDiscount(Benefit benefit, Order order, LocalDate date) {
-        if(isWeekDay(date) && canGetDiscount(date, BenefitType.WEEKDAY_DISCOUNT)) {
-            for(int i=0;i<order.countDessert();i++) {
-                benefit.update(BenefitType.WEEKDAY_DISCOUNT);
-            }
+        if (isWeekDay(date) && canGetDiscount(date, BenefitType.WEEKDAY_DISCOUNT)) {
+            int discount = Integer.parseInt(SystemValue.WEEKDAY_DISCOUNT_AMOUNT.getValue().toString()) * order.countDessert();
+            benefit.update(BenefitType.WEEKDAY_DISCOUNT, discount);
             return benefit;
         }
-        if(!isWeekDay(date) && canGetDiscount(date, BenefitType.WEEKEND_DISCOUNT)) {
-            for(int i=0;i<order.countMain();i++) {
-                benefit.update(BenefitType.WEEKEND_DISCOUNT);
-            }
+        if (!isWeekDay(date) && canGetDiscount(date, BenefitType.WEEKEND_DISCOUNT)) {
+            int discount = Integer.parseInt(SystemValue.WEEKEND_DISCOUNT_AMOUNT.getValue().toString()) * order.countMain();
+            benefit.update(BenefitType.WEEKEND_DISCOUNT, discount);
             return benefit;
         }
         return benefit;
@@ -83,7 +81,9 @@ public class EventService {
 
     private boolean isWeekDay(LocalDate date) {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
-        return dayOfWeek != DayOfWeek.FRIDAY && dayOfWeek != DayOfWeek.SATURDAY && dayOfWeek != SystemValue.SPECIAL_DISCOUNT.getValue();
+        return dayOfWeek != DayOfWeek.FRIDAY &&
+                dayOfWeek != DayOfWeek.SATURDAY &&
+                dayOfWeek != SystemValue.SPECIAL_DISCOUNT.getValue();
     }
 
     private boolean canGetGift(int amount, LocalDate date) {
@@ -92,7 +92,7 @@ public class EventService {
     }
 
     public String getGiftOutput(Benefit benefit) {
-        if (benefit.getNum(BenefitType.GIFT_EVENT) == 1) {
+        if (benefit.getNum(BenefitType.GIFT_EVENT) == MenuType.getByName(SystemValue.GIFT.getValue().toString()).getCost()) {
             return SystemValue.GIFT.getValue().toString() + " " +
                     SystemValue.GIFT_NUM.getValue().toString() + "개";
         }

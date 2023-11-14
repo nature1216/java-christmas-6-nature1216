@@ -10,6 +10,6 @@ public class XMasDiscountCalculator {
     public static int getDiscount(LocalDate date) {
         Long diff = ChronoUnit.DAYS.between(date, BenefitType.X_MAS_DISCOUNT.getStart());
         return Integer.parseInt(SystemValue.X_MAS_DISCOUNT_BASE.getValue().toString()) +
-                diff.intValue() * 100;
+                Math.abs(diff.intValue()) * 100;
     }
 }
