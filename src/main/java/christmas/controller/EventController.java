@@ -2,6 +2,7 @@ package christmas.controller;
 
 import christmas.domain.Benefit;
 import christmas.domain.Order;
+import christmas.enumeration.BadgeType;
 import christmas.service.EventService;
 import christmas.validator.Validator;
 import christmas.view.InputView;
@@ -28,6 +29,7 @@ public class EventController {
         outPutView.printTotalBeforeDiscount(totalBeforeAmount);
         final Benefit benefit = getBenefit(order, day);
         outPutView.printFinalAmount(eventService.calcTotalAfterDiscount(totalBeforeAmount, benefit));
+        final BadgeType badge = eventService.awardBadge(benefit.getTotalBenefit());
     }
 
     public int getDateInput() {

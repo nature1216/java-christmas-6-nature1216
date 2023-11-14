@@ -2,10 +2,7 @@ package christmas.service;
 
 import christmas.domain.Benefit;
 import christmas.domain.Order;
-import christmas.enumeration.BenefitType;
-import christmas.enumeration.MenuType;
-import christmas.enumeration.NoticeType;
-import christmas.enumeration.SystemValue;
+import christmas.enumeration.*;
 import christmas.util.DateUtil;
 import christmas.util.XMasDiscountCalculator;
 
@@ -102,5 +99,17 @@ public class EventService {
 
     public int calcTotalAfterDiscount(int beforeAmount, Benefit benefit) {
         return beforeAmount - benefit.getTotalDiscount();
+    }
+
+    public BadgeType awardBadge(int benefitAmount) {
+        if(benefitAmount >= BadgeType.STAR.getAmount() && benefitAmount < BadgeType.TREE.getAmount()) {
+            return BadgeType.STAR;
+        }
+        if(benefitAmount >= BadgeType.TREE.getAmount() && benefitAmount < BadgeType.SANTA.getAmount()) {
+            return BadgeType.TREE;
+        }
+        if(benefitAmount >= BadgeType.SANTA.getAmount()) {
+            return BadgeType.SANTA;
+        }
     }
 }

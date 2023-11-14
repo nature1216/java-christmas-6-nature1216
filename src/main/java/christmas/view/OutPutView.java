@@ -2,10 +2,7 @@ package christmas.view;
 
 import christmas.domain.Benefit;
 import christmas.domain.Order;
-import christmas.enumeration.BenefitType;
-import christmas.enumeration.MenuType;
-import christmas.enumeration.NoticeType;
-import christmas.enumeration.SystemValue;
+import christmas.enumeration.*;
 import christmas.util.FormatUtil;
 
 public class OutPutView {
@@ -14,7 +11,7 @@ public class OutPutView {
     }
 
     public void printPreviewNotice(int date) {
-        System.out.printf((NoticeType.BENEFIT_PREVIEW.getMessage()) + "%n", date);
+        System.out.printf(NoticeType.BENEFIT_PREVIEW.getMessage() + "%n", date);
         System.out.println();
     }
 
@@ -68,5 +65,4 @@ public class OutPutView {
         System.out.println(FormatUtil.toWonFormat(amount) + "원");
         System.out.println();
     }
-
 }
