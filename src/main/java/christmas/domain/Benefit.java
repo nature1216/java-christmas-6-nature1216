@@ -19,16 +19,28 @@ public class Benefit {
         return benefits.get(benefitType);
     }
 
-    public void update(BenefitType benefitType, int amount) {
-        benefits.put(benefitType, amount);
-    }
-
-    public int getTotalAmount() {
+    public int getTotalBenefit() {
         int totalAmount = 0;
         for(BenefitType benefitType : BenefitType.values()) {
             totalAmount += getAmount(benefitType);
         }
 
         return totalAmount;
+    }
+
+    public int getTotalDiscount() {
+        int totalDiscount = 0;
+        for(BenefitType benefitType : BenefitType.values()) {
+            if(benefitType.equals(BenefitType.GIFT_EVENT)) {
+                continue;
+            }
+            totalDiscount += getAmount(benefitType);
+        }
+
+        return totalDiscount;
+    }
+
+    public void update(BenefitType benefitType, int amount) {
+        benefits.put(benefitType, amount);
     }
 }

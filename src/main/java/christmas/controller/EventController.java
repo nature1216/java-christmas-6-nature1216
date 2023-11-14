@@ -27,7 +27,7 @@ public class EventController {
         int totalBeforeAmount = eventService.calcTotalBeforeDiscount(order);
         outPutView.printTotalBeforeDiscount(totalBeforeAmount);
         final Benefit benefit = getBenefit(order, day);
-        eventService.calcTotalAfterDiscount(totalBeforeAmount, benefit.getTotalAmount());
+        outPutView.printFinalAmount(eventService.calcTotalAfterDiscount(totalBeforeAmount, benefit));
     }
 
     public int getDateInput() {
@@ -58,7 +58,7 @@ public class EventController {
         String giftOutput = eventService.getGiftOutput(benefit);
         outPutView.printGift(giftOutput);
         outPutView.printBenefits(benefit);
-        outPutView.printTotalBenefit(benefit.getTotalAmount());
+        outPutView.printTotalBenefit(benefit.getTotalBenefit());
 
         return benefit;
     }

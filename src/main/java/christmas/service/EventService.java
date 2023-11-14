@@ -100,7 +100,7 @@ public class EventService {
         return NoticeType.NONE.getMessage();
     }
 
-    public int calcTotalAfterDiscount(int beforeAmount, int benefitAmount) {
-        return beforeAmount - beforeAmount;
+    public int calcTotalAfterDiscount(int beforeAmount, Benefit benefit) {
+        return beforeAmount - benefit.getTotalDiscount();
     }
 }

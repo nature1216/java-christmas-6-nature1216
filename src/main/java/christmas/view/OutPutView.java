@@ -60,6 +60,13 @@ public class OutPutView {
     public void printTotalBenefit(int amount) {
         System.out.println(NoticeType.TOTAL_BENEFIT.getMessage());
         System.out.println(FormatUtil.toWonFormat(amount * (-1)) + "원");
+        System.out.println();
+    }
+
+    public void printFinalAmount(int amount) {
+        System.out.println(NoticeType.FINAL_AMOUNT.getMessage());
+        System.out.println(FormatUtil.toWonFormat(amount) + "원");
+        System.out.println();
     }
 
 }
