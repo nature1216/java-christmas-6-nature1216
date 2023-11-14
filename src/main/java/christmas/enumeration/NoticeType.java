@@ -11,7 +11,8 @@ public enum NoticeType {
     NONE("없음"),
     BENEFIT("<혜택 내역>"),
     TOTAL_BENEFIT("<총혜택 금액>"),
-    FINAL_AMOUNT("<할인 후 예상 결제 금액>");
+    FINAL_AMOUNT("<할인 후 예상 결제 금액>"),
+    BADGE("<12월 이벤트 배지>");
 
     private String message;
 

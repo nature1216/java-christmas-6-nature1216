@@ -111,5 +111,6 @@ public class EventService {
         if(benefitAmount >= BadgeType.SANTA.getAmount()) {
             return BadgeType.SANTA;
         }
+        return BadgeType.NONE;
     }
 }

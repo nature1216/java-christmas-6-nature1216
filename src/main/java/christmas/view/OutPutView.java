@@ -65,4 +65,9 @@ public class OutPutView {
         System.out.println(FormatUtil.toWonFormat(amount) + "원");
         System.out.println();
     }
+
+    public void printBadge(BadgeType badge) {
+        System.out.println(NoticeType.BADGE.getMessage());
+        System.out.println(badge.getName());
+    }
 }

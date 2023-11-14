@@ -30,6 +30,7 @@ public class EventController {
         final Benefit benefit = getBenefit(order, day);
         outPutView.printFinalAmount(eventService.calcTotalAfterDiscount(totalBeforeAmount, benefit));
         final BadgeType badge = eventService.awardBadge(benefit.getTotalBenefit());
+        outPutView.printBadge(badge);
     }
 
     public int getDateInput() {
