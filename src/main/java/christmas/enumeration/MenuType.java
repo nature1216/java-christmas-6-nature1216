@@ -10,9 +10,9 @@ public enum MenuType {
     CHRISTMAS_PASTA("MAIN", "크리스마스파스타", 25000),
     CHOCOLATE_CAKE("DESSERT", "초코케이크", 15000),
     ICE_CREAM("DESSERT", "아이스크림", 5000),
-    ZERO_COKE("DESSERT", "제로콜라", 3000),
-    RED_WINE("DESSERT", "레드와인", 60000),
-    CHAMPAGNE("DESSERT", "샴페인", 25000);
+    ZERO_COKE("DRINK", "제로콜라", 3000),
+    RED_WINE("DRINK", "레드와인", 60000),
+    CHAMPAGNE("DRINK", "샴페인", 25000);
 
     private String category;
     private String name;

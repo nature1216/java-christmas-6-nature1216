@@ -58,9 +58,25 @@ public class Validator {
             MenuType.getByName(name);
             names.add(name);
         }
-        if(names.stream().distinct().count() < names.size()) {
+        if(hasDuplicatedMenuName(names)) {
             throw new IllegalArgumentException(ExceptionType.INVALID_MENU_FORMAT.getMessage());
         }
+        if(hasOnlyDrink(names)) {
+            throw new IllegalArgumentException(ExceptionType.ORDERED_ONLY_DRINK.getMessage());
+        }
+    }
+
+    private static boolean hasOnlyDrink(List<String> menuNames) {
+        for(String name : menuNames) {
+            if(!MenuType.getByName(name).getCategory().equals("DRINK")) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean hasDuplicatedMenuName(List<String> menuNames) {
+        return menuNames.stream().distinct().count() < menuNames.size();
     }
 
     private static boolean isInvalidMenuNum(int num) {
