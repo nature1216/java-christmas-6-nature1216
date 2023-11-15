@@ -29,6 +29,9 @@ public class MenuValidator {
     public static void validateNums(List<String> menus) {
         int num = 0;
         for (String menu : menus) {
+            if(Integer.parseInt(Arrays.asList(menu.split("-")).get(1)) <= 0) {
+                throw new IllegalArgumentException(ExceptionType.INVALID_MENU_FORMAT.getMessage());
+            }
             num += Integer.parseInt(Arrays.asList(menu.split("-")).get(1));
         }
         if (isInvalidNum(num)) {
