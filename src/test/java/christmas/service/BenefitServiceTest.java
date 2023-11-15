@@ -4,6 +4,7 @@ import christmas.domain.Benefit;
 import christmas.domain.Order;
 import christmas.enumeration.BenefitType;
 import christmas.enumeration.MenuType;
+import christmas.enumeration.SystemTextValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,7 +28,7 @@ public class BenefitServiceTest {
         assertThat(benefit.getTotalBenefit()).isEqualTo(0);
     }
 
-    @DisplayName("주말 할인을 적용한다.")
+    @DisplayName("날짜에 따라 주말 할인을 적용한다.")
     @ParameterizedTest
     @CsvSource(value = {
             "2023-12-01, 4046",
@@ -46,7 +47,7 @@ public class BenefitServiceTest {
                 .isEqualTo(expected);
     }
 
-    @DisplayName("평일 할인을 적용한다.")
+    @DisplayName("날짜에 따라 평일 할인을 적용한다.")
     @ParameterizedTest
     @CsvSource(value = {
             "2023-12-02, 0",
@@ -65,7 +66,7 @@ public class BenefitServiceTest {
         assertThat(benefit.getAmount(BenefitType.WEEKDAY_DISCOUNT)).isEqualTo(expected);
     }
 
-    @DisplayName("크리스마스 디데이 할인을 적용한다.")
+    @DisplayName("날짜에 따라 크리스마스 디데이 할인을 적용한다.")
     @ParameterizedTest
     @CsvSource(value = {
             "2023-12-03, 1200",
@@ -84,7 +85,7 @@ public class BenefitServiceTest {
         assertThat(benefit.getAmount(BenefitType.X_MAS_DISCOUNT)).isEqualTo(expected);
     }
 
-    @DisplayName("특별 할인을 적용한다.")
+    @DisplayName("날짜에 따라 특별 할인을 적용한다.")
     @ParameterizedTest
     @CsvSource(value = {
             "2023-12-03, 1000",
@@ -101,5 +102,19 @@ public class BenefitServiceTest {
         benefitService.applySpecialDiscount(benefit, date);
 
         assertThat(benefit.getAmount(BenefitType.SPECIAL_DISCOUNT)).isEqualTo(expected);
+    }
+
+    @DisplayName("구매금액과 날짜에 따라 증정 이벤트를 적용한다.")
+    @ParameterizedTest
+    @CsvSource(value = {
+            "2023-12-03, 120000, 25000",
+            "2023-12-03, 10000, 0"
+    })
+    void giveGift(LocalDate date, int totalCost, int expected) {
+        Benefit benefit = new Benefit();
+        benefitService.giveGift(benefit, date, totalCost);
+
+        assertThat(benefit.getAmount(BenefitType.GIFT_EVENT))
+                .isEqualTo(expected);
     }
 }
