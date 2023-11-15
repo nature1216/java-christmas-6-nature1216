@@ -4,6 +4,7 @@ import christmas.enumeration.ExceptionType;
 import christmas.enumeration.MenuType;
 import christmas.enumeration.SystemValue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -51,9 +52,14 @@ public class Validator {
     }
 
     private static void validateMenuNames(List<String> menus) {
+        List<String> names = new ArrayList<>();
         for (String menu : menus) {
             String name = Arrays.asList(menu.split("-")).get(0);
             MenuType.getByName(name);
+            names.add(name);
+        }
+        if(names.stream().distinct().count() < names.size()) {
+            throw new IllegalArgumentException(ExceptionType.INVALID_MENU_FORMAT.getMessage());
         }
     }
 

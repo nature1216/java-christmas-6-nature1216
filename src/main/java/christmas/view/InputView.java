@@ -8,23 +8,14 @@ public class InputView {
     public String readDate() {
         System.out.println(NoticeType.DATE_INPUT.getMessage());
         String input = Console.readLine();
-        try {
-            Validator.validateDateInput(input);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-
+        Validator.validateDateInput(input);
         return input;
     }
 
     public String readMenu() {
         System.out.println(NoticeType.MENU_INPUT.getMessage());
         String input = Console.readLine();
-        try {
-            Validator.validateMenuInput(input.replaceAll("\\s", ""));
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
+        Validator.validateMenuInput(input.replaceAll("\\s", ""));
 
         return input;
     }
