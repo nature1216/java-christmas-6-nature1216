@@ -44,7 +44,7 @@ public class MenuValidator {
             names.add(name);
         }
         if(hasDuplicatedName(names)) {
-            throw new IllegalArgumentException(ExceptionType.INVALID_MENU_FORMAT.getMessage());
+            throw new IllegalArgumentException(ExceptionType.DUPLICATED_MENU.getMessage());
         }
         if(hasOnlyDrink(names)) {
             throw new IllegalArgumentException(ExceptionType.ORDERED_ONLY_DRINK.getMessage());
