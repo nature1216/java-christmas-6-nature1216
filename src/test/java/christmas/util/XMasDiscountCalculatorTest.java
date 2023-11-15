@@ -15,6 +15,7 @@ public class XMasDiscountCalculatorTest {
             "2023-12-01, 1000",
             "2023-12-03, 1200",
             "2023-12-25, 3400",
+            "2023-12-26, 0"
     })
     void getDiscount(LocalDate date, int expected) {
         assertThat(XMasDiscountCalculator.getDiscount(date)).isEqualTo(expected);
