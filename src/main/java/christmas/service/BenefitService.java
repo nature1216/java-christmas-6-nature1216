@@ -34,7 +34,7 @@ public class BenefitService {
         return NoticeType.NONE.getMessage();
     }
 
-    private Benefit applyWeekDiscount(Benefit benefit, Order order, LocalDate date) {
+    public Benefit applyWeekDiscount(Benefit benefit, Order order, LocalDate date) {
         if (isWeekDay(date) && canGetDiscount(date, BenefitType.WEEKDAY_DISCOUNT)) {
             int discount = SystemNumValue.WEEKDAY_DISCOUNT_AMOUNT.getValue() * order.countDessert();
             benefit.update(BenefitType.WEEKDAY_DISCOUNT, discount);
@@ -48,13 +48,13 @@ public class BenefitService {
         return benefit;
     }
 
-    private void applyXmasDiscount(Benefit benefit, LocalDate date) {
+    public void applyXmasDiscount(Benefit benefit, LocalDate date) {
         if (canGetDiscount(date, BenefitType.X_MAS_DISCOUNT)) {
             benefit.update(BenefitType.X_MAS_DISCOUNT, XMasDiscountCalculator.getDiscount(date));
         }
     }
 
-    private void applySpecialDiscount(Benefit benefit, LocalDate date) {
+    public void applySpecialDiscount(Benefit benefit, LocalDate date) {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
         if (canGetDiscount(date, BenefitType.SPECIAL_DISCOUNT)) {
             if (dayOfWeek == DayOfWeek.SUNDAY || date.isEqual(LocalDate.of(2023, 12, 25))) {
@@ -63,7 +63,7 @@ public class BenefitService {
         }
     }
 
-    private void giveGift(Benefit benefit, LocalDate date, int totalBeforeDiscount) {
+    public void giveGift(Benefit benefit, LocalDate date, int totalBeforeDiscount) {
         if (canGetGift(totalBeforeDiscount, date)) {
             benefit.update(BenefitType.GIFT_EVENT,
                     MenuType.getByName(SystemTextValue.GIFT.getValue()).getCost());
