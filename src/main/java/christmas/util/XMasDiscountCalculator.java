@@ -8,7 +8,7 @@ import java.time.temporal.ChronoUnit;
 
 public class XMasDiscountCalculator {
     public static int getDiscount(LocalDate date) {
-        Long diff = ChronoUnit.DAYS.between(date, BenefitType.X_MAS_DISCOUNT.getStart());
-        return SystemNumValue.X_MAS_DISCOUNT_BASE.getValue() + Math.abs(diff.intValue()) * 100;
+        long diff = ChronoUnit.DAYS.between(date, BenefitType.X_MAS_DISCOUNT.getStart());
+        return SystemNumValue.X_MAS_DISCOUNT_BASE.getValue() + Math.abs((int) diff) * 100;
     }
 }

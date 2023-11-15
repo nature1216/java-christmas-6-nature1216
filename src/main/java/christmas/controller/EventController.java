@@ -3,20 +3,22 @@ package christmas.controller;
 import christmas.domain.Benefit;
 import christmas.domain.Order;
 import christmas.enumeration.BadgeType;
+import christmas.service.BenefitService;
 import christmas.service.EventService;
-import christmas.validator.Validator;
 import christmas.view.InputView;
 import christmas.view.OutPutView;
 
 public class EventController {
-    InputView inputView;
-    OutPutView outPutView;
-    EventService eventService;
+    private final InputView inputView;
+    private final OutPutView outPutView;
+    private final EventService eventService;
+    private final BenefitService benefitService;
 
-    public EventController(InputView inputView, OutPutView outPutView, EventService eventService) {
+    public EventController(InputView inputView, OutPutView outPutView, EventService eventService, BenefitService benefitService) {
         this.inputView = inputView;
         this.outPutView = outPutView;
         this.eventService = eventService;
+        this.benefitService = benefitService;
     }
 
     public void run() {
@@ -54,8 +56,8 @@ public class EventController {
     }
 
     public Benefit getBenefit(Order order, int day) {
-        Benefit benefit = eventService.applyBenefit(order, day);
-        String giftOutput = eventService.getGiftOutput(benefit);
+        Benefit benefit = benefitService.applyBenefit(order, day, eventService.calcTotalBeforeDiscount(order));
+        String giftOutput = benefitService.getGiftOutput(benefit);
         outPutView.printGift(giftOutput);
         outPutView.printBenefits(benefit);
         outPutView.printTotalBenefit(benefit.getTotalBenefit());
