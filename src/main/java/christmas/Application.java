@@ -1,6 +1,7 @@
 package christmas;
 
 import christmas.controller.EventController;
+import christmas.service.BenefitService;
 import christmas.service.EventService;
 import christmas.view.InputView;
 import christmas.view.OutPutView;
@@ -11,7 +12,8 @@ public class Application {
         InputView inputView = new InputView();
         OutPutView outPutView = new OutPutView();
         EventService eventService = new EventService();
-        EventController eventController = new EventController(inputView, outPutView, eventService);
+        BenefitService benefitService = new BenefitService();
+        EventController eventController = new EventController(inputView, outPutView, eventService, benefitService);
 
         eventController.run();
     }

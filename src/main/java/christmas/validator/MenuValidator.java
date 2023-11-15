@@ -11,55 +11,35 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Validator {
-    public static void validateDateInput(String input) {
-        int date = validateDateType(input);
-        if (isDateOutOfRange(date)) {
-            throw new IllegalArgumentException(ExceptionType.INVALID_DATE_TYPE.getMessage());
-        }
-    }
-
-    public static int validateDateType(String input) {
-        try {
-            return Integer.parseInt(input);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(ExceptionType.INVALID_DATE_TYPE.getMessage());
-        }
-    }
-
-    private static boolean isDateOutOfRange(int input) {
-        return input < SystemNumValue.FIRST_DATE.getValue() ||
-                input > SystemNumValue.END_DATE.getValue();
-    }
-
-    public static void validateMenuInput(String input) {
+public class MenuValidator {
+    public static void validateInput(String input) {
         if (!isMatchFormat(input, SystemTextValue.MENU_INPUT_FORM.getValue())) {
             throw new IllegalArgumentException(ExceptionType.INVALID_MENU_FORMAT.getMessage());
         }
         List<String> menus = Arrays.asList(input.split(","));
 
-        validateMenuNames(menus);
-        validateMenuNums(menus);
+        validateNames(menus);
+        validateNums(menus);
     }
 
-    private static void validateMenuNums(List<String> menus) {
+    private static void validateNums(List<String> menus) {
         int num = 0;
         for (String menu : menus) {
             num += Integer.parseInt(Arrays.asList(menu.split("-")).get(1));
         }
-        if (isInvalidMenuNum(num)) {
+        if (isInvalidNum(num)) {
             throw new IllegalArgumentException(ExceptionType.INVALID_MENU_FORMAT.getMessage());
         }
     }
 
-    private static void validateMenuNames(List<String> menus) {
+    private static void validateNames(List<String> menus) {
         List<String> names = new ArrayList<>();
         for (String menu : menus) {
             String name = Arrays.asList(menu.split("-")).get(0);
             MenuType.getByName(name);
             names.add(name);
         }
-        if(hasDuplicatedMenuName(names)) {
+        if(hasDuplicatedName(names)) {
             throw new IllegalArgumentException(ExceptionType.INVALID_MENU_FORMAT.getMessage());
         }
         if(hasOnlyDrink(names)) {
@@ -76,11 +56,11 @@ public class Validator {
         return true;
     }
 
-    private static boolean hasDuplicatedMenuName(List<String> menuNames) {
+    private static boolean hasDuplicatedName(List<String> menuNames) {
         return menuNames.stream().distinct().count() < menuNames.size();
     }
 
-    private static boolean isInvalidMenuNum(int num) {
+    private static boolean isInvalidNum(int num) {
         return num > SystemNumValue.MAX_MENU_NUM.getValue();
     }
 

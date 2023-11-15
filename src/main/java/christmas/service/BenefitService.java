@@ -69,7 +69,7 @@ public class BenefitService {
                     MenuType.getByName(SystemTextValue.GIFT.getValue()).getCost());
         }
     }
-    
+
     private boolean canGetBenefit(int totalAmount) {
         return totalAmount >= SystemNumValue.MINIMUM_AMOUNT_FOR_BENEFIT.getValue();
     }
