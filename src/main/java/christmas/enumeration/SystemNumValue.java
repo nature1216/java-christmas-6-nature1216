@@ -1,15 +1,11 @@
 package christmas.enumeration;
 
-import java.time.DayOfWeek;
-
-public enum SystemValue {
-    MENU_INPUT_FORM("^([가-힣]+-\\d+,)*[가-힣]+-\\d+$"),
+public enum SystemNumValue {
     MAX_MENU_NUM(20),
     FIRST_DATE(1),
     END_DATE(31),
     GIFT_THRESHOLD(120000),
     MINIMUM_AMOUNT_FOR_BENEFIT(10000),
-    GIFT(MenuType.CHAMPAGNE.getName()),
     GIFT_NUM(1),
     EVENT_YEAR(2023),
     EVENT_MONTH(12),
@@ -18,13 +14,13 @@ public enum SystemValue {
     WEEKDAY_DISCOUNT_AMOUNT(2023),
     WEEKEND_DISCOUNT_AMOUNT(2023);
 
-    private Object value;
+    private int value;
 
-    SystemValue(Object value) {
+    SystemNumValue(int value) {
         this.value = value;
     }
 
-    public Object getValue() {
+    public int getValue() {
         return value;
     }
 

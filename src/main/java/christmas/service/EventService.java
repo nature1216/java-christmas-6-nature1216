@@ -39,7 +39,7 @@ public class EventService {
         LocalDate date = DateUtil.dayToDate(day);
         int totalBeforeDiscount = calcTotalBeforeDiscount(order);
 
-        if(!canGetBenefit(totalBeforeDiscount)) {
+        if (!canGetBenefit(totalBeforeDiscount)) {
             return benefit;
         }
 
@@ -60,31 +60,31 @@ public class EventService {
     private void giveGift(Benefit benefit, LocalDate date, int totalBeforeDiscount) {
         if (canGetGift(totalBeforeDiscount, date)) {
             benefit.update(BenefitType.GIFT_EVENT,
-                    MenuType.getByName(SystemValue.GIFT.getValue().toString()).getCost());
+                    MenuType.getByName(SystemTextValue.GIFT.getValue()).getCost());
         }
     }
 
     private boolean canGetBenefit(int totalAmount) {
-        return totalAmount >= Integer.parseInt(SystemValue.MINIMUM_AMOUNT_FOR_BENEFIT.getValue().toString());
+        return totalAmount >= SystemNumValue.MINIMUM_AMOUNT_FOR_BENEFIT.getValue();
     }
 
     private void applySpecialDiscount(Benefit benefit, LocalDate date) {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
-        if(canGetDiscount(date, BenefitType.SPECIAL_DISCOUNT)) {
+        if (canGetDiscount(date, BenefitType.SPECIAL_DISCOUNT)) {
             if (dayOfWeek == DayOfWeek.SUNDAY || date.isEqual(LocalDate.of(2023, 12, 25))) {
-                benefit.update(BenefitType.SPECIAL_DISCOUNT, Integer.parseInt(SystemValue.SPECIAL_DISCOUNT.getValue().toString()));
+                benefit.update(BenefitType.SPECIAL_DISCOUNT, SystemNumValue.SPECIAL_DISCOUNT.getValue());
             }
         }
     }
 
     private Benefit applyWeekDiscount(Benefit benefit, Order order, LocalDate date) {
         if (isWeekDay(date) && canGetDiscount(date, BenefitType.WEEKDAY_DISCOUNT)) {
-            int discount = Integer.parseInt(SystemValue.WEEKDAY_DISCOUNT_AMOUNT.getValue().toString()) * order.countDessert();
+            int discount = SystemNumValue.WEEKDAY_DISCOUNT_AMOUNT.getValue() * order.countDessert();
             benefit.update(BenefitType.WEEKDAY_DISCOUNT, discount);
             return benefit;
         }
         if (!isWeekDay(date) && canGetDiscount(date, BenefitType.WEEKEND_DISCOUNT)) {
-            int discount = Integer.parseInt(SystemValue.WEEKEND_DISCOUNT_AMOUNT.getValue().toString()) * order.countMain();
+            int discount = SystemNumValue.WEEKEND_DISCOUNT_AMOUNT.getValue() * order.countMain();
             benefit.update(BenefitType.WEEKEND_DISCOUNT, discount);
             return benefit;
         }
@@ -102,14 +102,14 @@ public class EventService {
     }
 
     private boolean canGetGift(int amount, LocalDate date) {
-        return amount >= Integer.parseInt(SystemValue.GIFT_THRESHOLD.getValue().toString())
+        return amount >= SystemNumValue.GIFT_THRESHOLD.getValue()
                 && DateUtil.inEventPeriod(date, BenefitType.GIFT_EVENT.getStart(), BenefitType.GIFT_EVENT.getEnd());
     }
 
     public String getGiftOutput(Benefit benefit) {
-        if (benefit.getAmount(BenefitType.GIFT_EVENT) == MenuType.getByName(SystemValue.GIFT.getValue().toString()).getCost()) {
-            return SystemValue.GIFT.getValue().toString() + " " +
-                    SystemValue.GIFT_NUM.getValue().toString() + "개\n";
+        if (benefit.getAmount(BenefitType.GIFT_EVENT) == MenuType.getByName(SystemTextValue.GIFT.getValue()).getCost()) {
+            return SystemTextValue.GIFT.getValue().toString() + " " +
+                    SystemNumValue.GIFT_NUM.getValue() + "개\n";
         }
         return NoticeType.NONE.getMessage();
     }
@@ -119,13 +119,13 @@ public class EventService {
     }
 
     public BadgeType awardBadge(int benefitAmount) {
-        if(benefitAmount >= BadgeType.STAR.getAmount() && benefitAmount < BadgeType.TREE.getAmount()) {
+        if (benefitAmount >= BadgeType.STAR.getAmount() && benefitAmount < BadgeType.TREE.getAmount()) {
             return BadgeType.STAR;
         }
-        if(benefitAmount >= BadgeType.TREE.getAmount() && benefitAmount < BadgeType.SANTA.getAmount()) {
+        if (benefitAmount >= BadgeType.TREE.getAmount() && benefitAmount < BadgeType.SANTA.getAmount()) {
             return BadgeType.TREE;
         }
-        if(benefitAmount >= BadgeType.SANTA.getAmount()) {
+        if (benefitAmount >= BadgeType.SANTA.getAmount()) {
             return BadgeType.SANTA;
         }
         return BadgeType.NONE;

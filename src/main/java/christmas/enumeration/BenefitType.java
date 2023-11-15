@@ -1,7 +1,6 @@
 package christmas.enumeration;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public enum BenefitType {
     X_MAS_DISCOUNT("크리스마스 디데이 할인", LocalDate.of(2023, 12, 1), LocalDate.of(2023, 12, 25)),

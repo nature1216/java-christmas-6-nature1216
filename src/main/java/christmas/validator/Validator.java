@@ -2,7 +2,8 @@ package christmas.validator;
 
 import christmas.enumeration.ExceptionType;
 import christmas.enumeration.MenuType;
-import christmas.enumeration.SystemValue;
+import christmas.enumeration.SystemNumValue;
+import christmas.enumeration.SystemTextValue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,12 +28,12 @@ public class Validator {
     }
 
     private static boolean isDateOutOfRange(int input) {
-        return input < Integer.parseInt(SystemValue.FIRST_DATE.getValue().toString()) ||
-                input > Integer.parseInt(SystemValue.END_DATE.getValue().toString());
+        return input < SystemNumValue.FIRST_DATE.getValue() ||
+                input > SystemNumValue.END_DATE.getValue();
     }
 
     public static void validateMenuInput(String input) {
-        if (!isMatchFormat(input, SystemValue.MENU_INPUT_FORM.getValue().toString())) {
+        if (!isMatchFormat(input, SystemTextValue.MENU_INPUT_FORM.getValue())) {
             throw new IllegalArgumentException(ExceptionType.INVALID_MENU_FORMAT.getMessage());
         }
         List<String> menus = Arrays.asList(input.split(","));
@@ -80,7 +81,7 @@ public class Validator {
     }
 
     private static boolean isInvalidMenuNum(int num) {
-        return num > Integer.parseInt(SystemValue.MAX_MENU_NUM.getValue().toString());
+        return num > SystemNumValue.MAX_MENU_NUM.getValue();
     }
 
     private static boolean isMatchFormat(String input, String regex) {

@@ -1,14 +1,14 @@
 package christmas.util;
 
-import christmas.enumeration.SystemValue;
+import christmas.enumeration.SystemNumValue;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class DateUtil {
     public static LocalDate dayToDate(int dayInput) {
-        String year = SystemValue.EVENT_YEAR.getValue().toString();
-        String month = SystemValue.EVENT_MONTH.getValue().toString();
+        String year = String.valueOf(SystemNumValue.EVENT_YEAR.getValue());
+        String month = String.valueOf(SystemNumValue.EVENT_MONTH.getValue());
         String day = Integer.toString(dayInput);
         if (dayInput < 10) {
             day = "0" + day;

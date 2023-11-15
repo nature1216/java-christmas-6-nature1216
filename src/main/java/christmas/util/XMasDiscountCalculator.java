@@ -1,7 +1,7 @@
 package christmas.util;
 
 import christmas.enumeration.BenefitType;
-import christmas.enumeration.SystemValue;
+import christmas.enumeration.SystemNumValue;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -9,7 +9,6 @@ import java.time.temporal.ChronoUnit;
 public class XMasDiscountCalculator {
     public static int getDiscount(LocalDate date) {
         Long diff = ChronoUnit.DAYS.between(date, BenefitType.X_MAS_DISCOUNT.getStart());
-        return Integer.parseInt(SystemValue.X_MAS_DISCOUNT_BASE.getValue().toString()) +
-                Math.abs(diff.intValue()) * 100;
+        return SystemNumValue.X_MAS_DISCOUNT_BASE.getValue() + Math.abs(diff.intValue()) * 100;
     }
 }
