@@ -20,16 +20,6 @@ public class EventService {
         return orders;
     }
 
-    public int calcTotalBeforeDiscount(Order order) {
-        int amount = 0;
-        for (MenuType menuType : MenuType.values()) {
-            if (order.getNum(menuType) > 0) {
-                amount += menuType.getCost() * order.getNum(menuType);
-            }
-        }
-        return amount;
-    }
-
     public int calcTotalAfterDiscount(int beforeAmount, Benefit benefit) {
         return beforeAmount - benefit.getTotalDiscount();
     }

@@ -42,4 +42,14 @@ public class Order {
         return count;
     }
 
+    public int calcTotalCost() {
+        int cost = 0;
+        for(MenuType menuType : MenuType.values()) {
+            if(getNum(menuType) > 0) {
+                cost += menuType.getCost() * getNum(menuType);
+            }
+        }
+        return cost;
+    }
+
 }
