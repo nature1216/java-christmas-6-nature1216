@@ -26,7 +26,7 @@ public class Order {
         int count = 0;
         for(MenuType menuType : MenuType.values()) {
             if(menuType.getCategory().equals("DESSERT") && getNum(menuType) >= 1) {
-                count++;
+                count += getNum(menuType);
             }
         }
         return count;

@@ -98,8 +98,7 @@ public class EventService {
     private boolean isWeekDay(LocalDate date) {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
         return dayOfWeek != DayOfWeek.FRIDAY &&
-                dayOfWeek != DayOfWeek.SATURDAY &&
-                dayOfWeek != SystemValue.SPECIAL_DISCOUNT.getValue();
+                dayOfWeek != DayOfWeek.SATURDAY;
     }
 
     private boolean canGetGift(int amount, LocalDate date) {
