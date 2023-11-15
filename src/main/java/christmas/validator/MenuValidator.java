@@ -13,16 +13,20 @@ import java.util.regex.Pattern;
 
 public class MenuValidator {
     public static void validateInput(String input) {
-        if (!isMatchFormat(input, SystemTextValue.MENU_INPUT_FORM.getValue())) {
-            throw new IllegalArgumentException(ExceptionType.INVALID_MENU_FORMAT.getMessage());
-        }
+        validateFormat(input);
         List<String> menus = Arrays.asList(input.split(","));
 
         validateNames(menus);
         validateNums(menus);
     }
 
-    private static void validateNums(List<String> menus) {
+    public static void validateFormat(String input) {
+        if (!isMatchFormat(input, SystemTextValue.MENU_INPUT_FORM.getValue())) {
+            throw new IllegalArgumentException(ExceptionType.INVALID_MENU_FORMAT.getMessage());
+        }
+    }
+
+    public static void validateNums(List<String> menus) {
         int num = 0;
         for (String menu : menus) {
             num += Integer.parseInt(Arrays.asList(menu.split("-")).get(1));
@@ -32,7 +36,7 @@ public class MenuValidator {
         }
     }
 
-    private static void validateNames(List<String> menus) {
+    public static void validateNames(List<String> menus) {
         List<String> names = new ArrayList<>();
         for (String menu : menus) {
             String name = Arrays.asList(menu.split("-")).get(0);
