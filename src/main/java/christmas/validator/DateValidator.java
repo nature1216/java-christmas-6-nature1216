@@ -6,6 +6,10 @@ import christmas.enumeration.SystemNumValue;
 public class DateValidator {
     public static void validateInput(String input) {
         int date = validateType(input);
+        validateRange(date);
+    }
+
+    public static void validateRange(int date) {
         if (isOutOfRange(date)) {
             throw new IllegalArgumentException(ExceptionType.INVALID_DATE_TYPE.getMessage());
         }
