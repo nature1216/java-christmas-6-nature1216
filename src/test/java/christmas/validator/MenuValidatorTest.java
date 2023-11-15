@@ -67,6 +67,15 @@ public class MenuValidatorTest {
         assertDoesNotThrow(() -> MenuValidator.validateNames(menus));
     }
 
+    @DisplayName("음료만 주문한 경우 경우 예외가 발생한다.")
+    @ParameterizedTest
+    @MethodSource("onlyDrinkProvider")
+    void validateNames_음료만_주문하면_예외(List<String> menus) {
+        assertThatThrownBy(() -> MenuValidator.validateNames(menus))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 음료만 주문할 수 없습니다.");
+    }
+
     static Stream<List<String>> inValidNumProvider() {
         return Stream.of(
                 Arrays.asList("양송이수프-5", "티본스테이크-6", "제로콜라-5", "초코케이크-5"),
@@ -96,6 +105,13 @@ public class MenuValidatorTest {
                 Arrays.asList("티본스테이크-2","제로콜라-5"),
                 List.of("바비큐립-2"),
                 List.of("초코케이크-5")
+        );
+    }
+
+    static Stream<List<String>> onlyDrinkProvider() {
+        return Stream.of(
+                Arrays.asList("제로콜라-2", "샴페인-1"),
+                List.of("제로콜라-5")
         );
     }
 }
