@@ -75,12 +75,12 @@ public class BenefitService {
     }
 
     private boolean canGetDiscount(LocalDate date, BenefitType benefitType) {
-        return DateUtil.inEventPeriod(date, benefitType.getStart(), benefitType.getEnd());
+        return DateUtil.inEventPeriod(date, benefitType);
     }
 
     private boolean canGetGift(int amount, LocalDate date) {
         return amount >= SystemNumValue.GIFT_THRESHOLD.getValue()
-                && DateUtil.inEventPeriod(date, BenefitType.GIFT_EVENT.getStart(), BenefitType.GIFT_EVENT.getEnd());
+                && DateUtil.inEventPeriod(date, BenefitType.GIFT_EVENT);
     }
 
     private boolean isWeekDay(LocalDate date) {
