@@ -4,7 +4,6 @@ import christmas.domain.Benefit;
 import christmas.domain.Order;
 import christmas.enumeration.BenefitType;
 import christmas.enumeration.MenuType;
-import christmas.enumeration.SystemTextValue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
