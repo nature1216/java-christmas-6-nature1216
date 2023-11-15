@@ -34,7 +34,6 @@ public class OutPutView {
     public void printGift(String output) {
         System.out.println(NoticeType.GIFT.getMessage());
         System.out.println(output);
-        System.out.println();
     }
 
     public void printBenefits(Benefit benefit) {
@@ -68,6 +67,6 @@ public class OutPutView {
 
     public void printBadge(BadgeType badge) {
         System.out.println(NoticeType.BADGE.getMessage());
-        System.out.println(badge.getName());
+        System.out.print(badge.getName());
     }
 }

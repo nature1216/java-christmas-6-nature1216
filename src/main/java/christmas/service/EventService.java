@@ -109,7 +109,7 @@ public class EventService {
     public String getGiftOutput(Benefit benefit) {
         if (benefit.getAmount(BenefitType.GIFT_EVENT) == MenuType.getByName(SystemValue.GIFT.getValue().toString()).getCost()) {
             return SystemValue.GIFT.getValue().toString() + " " +
-                    SystemValue.GIFT_NUM.getValue().toString() + "개";
+                    SystemValue.GIFT_NUM.getValue().toString() + "개\n";
         }
         return NoticeType.NONE.getMessage();
     }
