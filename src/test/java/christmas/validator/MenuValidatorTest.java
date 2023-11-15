@@ -1,6 +1,7 @@
 package christmas.validator;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -67,13 +68,22 @@ public class MenuValidatorTest {
         assertDoesNotThrow(() -> MenuValidator.validateNames(menus));
     }
 
-    @DisplayName("음료만 주문한 경우 경우 예외가 발생한다.")
+    @DisplayName("음료만 주문한 경우 예외가 발생한다.")
     @ParameterizedTest
     @MethodSource("onlyDrinkProvider")
     void validateNames_음료만_주문하면_예외(List<String> menus) {
         assertThatThrownBy(() -> MenuValidator.validateNames(menus))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("[ERROR] 음료만 주문할 수 없습니다.");
+    }
+
+    @DisplayName("메뉴를 중복해서 입력할 경우 예외가 발생한다.")
+    @Test
+    void validateNames_중복된_메뉴를_입력하면_예외() {
+        List<String> menus = Arrays.asList("시저샐러드-1","시저샐러드-2");
+        assertThatThrownBy(() -> MenuValidator.validateNames(menus))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 한 메뉴는 한 번만 입력할 수 있습니다.");
     }
 
     static Stream<List<String>> inValidNumProvider() {
